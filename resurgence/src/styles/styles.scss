@@ -1,0 +1,195 @@
+
+$swgDlgBackgroundClr: #004B56;
+$swgDlgHeaderBackgroundClr: #00E3F3;
+$swgDlgBorderClr: #35BDCE;
+$swgControlClr: #FBA22E;
+$swgTextClr: #9CF0FA;
+
+$primary: $swgDlgBorderClr;
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+html {
+  font-family: sans-serif;
+  font-size: 14px;
+}
+
+body {
+  background: url("../Stars.png") #111111 repeat;
+
+}
+
+.appHeadline {
+  color: transparent;
+  background-color: transparent;
+  height: 1px;
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+}
+
+@media only screen and (max-width: 1199px) {
+  .appHeadline {
+    margin-bottom: 1rem;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .appHeadline {
+    margin-bottom: 0;
+    position: absolute;
+  }
+}
+
+.topic,
+.category {
+  font-weight: bold;
+}
+
+.more {
+  user-select: none;
+  white-space: nowrap;
+}
+
+.more .btn {
+  width: 1.25rem;
+  //border-radius: 50%;
+  padding: 0;
+  height: 1.25rem;
+  line-height: 1;
+  font-size: 1rem;
+}
+
+.btn,
+.btn.btn-primary,
+.btn.btn-outline-primary
+{
+  &:focus,
+  &:active {
+    -webkit-box-shadow: none !important;
+    box-shadow:         none !important;
+  }
+}
+
+.assignments,
+.selections {
+  > div {
+    line-height: 2rem;
+  }
+}
+
+.line-height-default {
+  line-height: 1.5rem !important;
+}
+
+.line-height-2 {
+  line-height: 1.75 !important;
+}
+
+.btn-primary {
+  color: white;
+}
+
+.swgDialog {
+  background-color: $swgDlgBackgroundClr;
+  border: 3px solid $swgDlgHeaderBackgroundClr;
+  color: $swgTextClr;
+  border-radius: 7px;
+}
+
+.swgDialogTitle {
+  background-color: $swgDlgHeaderBackgroundClr;
+  color: $swgDlgBackgroundClr;
+  font-weight: bold;
+  font-size: 0.8rem;
+  padding: 0 6px 3px 6px;
+}
+
+.swgDialogArea {
+  background-color: $swgDlgBackgroundClr;
+  border: 1px solid $swgDlgBorderClr;
+  border-radius: 7px;
+  margin: 15px 0;
+  padding: 10px;
+}
+
+.form-control,
+.form-control:focus,
+.form-control:disabled,
+.form-control[readonly] {
+  background-color: $swgDlgBackgroundClr;
+  border: 1px solid $swgDlgBorderClr;
+  border-radius: 7px;
+  color: $swgTextClr;
+}
+
+$transition: left 0.5s ease, top 0.5s ease;
+
+.tour {
+  position: absolute;
+
+  -webkit-transition: $transition;
+  -moz-transition: $transition;
+  -o-transition: $transition;
+  -ms-transition: $transition;
+  transition: $transition;
+}
+
+.tourClone {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.tour-container {
+  background-color: $swgDlgBackgroundClr;
+  border: 2px solid $swgControlClr;
+  border-radius: 5px;
+  padding: 0.5rem;
+  max-width: 28rem;
+  color: $swgTextClr;
+  margin: 28px 0;
+}
+
+.tour-header {
+  background-color: $swgControlClr;
+  color: white;
+  font-weight: bold;
+  font-size: 0.8rem;
+  margin: -0.5rem -0.5rem 0.5rem;
+  padding: 0 6px 3px 6px;
+}
+
+.tourButtonRow {
+  display: flex;
+  justify-content: space-between;
+
+  .btn {
+    padding: 0 0.5rem;
+    background-color: $swgControlClr;
+    border-color: $swgControlClr;
+
+    &:hover {
+      background-color: darken($swgControlClr, 15);
+      border-color: darken($swgControlClr, 15);
+    }
+  }
+
+  .tour-button-close {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+}
+
+.copyToClipboardResponse {
+  display: none;
+  position: absolute;
+  vertical-align: middle;
+  background-color: $swgControlClr;
+  color: #ffffff;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-radius: 0.2rem;
+
+  &.copyToClipboardResponseVisible {
+    display: block;
+  }
+}

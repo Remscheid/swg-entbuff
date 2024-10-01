@@ -1,0 +1,64 @@
+<div *ngIf="parent.currentTourStep > 0" id="tour-{{parent.currentTourStep}}" class="tour tour-{{parent.currentTourStep}}">
+    <div class="tour-container">
+        <div class="tour-header">Introduction tour</div>
+
+        <div *ngIf="parent.currentTourStep === 1">
+            Welcome to the SWG Entertainer Buff Builder!<br>
+            <br>
+            This tool is intended to help you setup your desired entertainer buffs and supply you with a chat message that you can send to your fellow entertainer.<br>
+            <br>
+            For an introduction just follow this litte tour.
+        </div>
+
+        <div *ngIf="parent.currentTourStep === 2">
+            These are the buffs an entertainer has available. You can spend a total of 20 points by clicking on the plus buttons on the right.
+        </div>
+
+        <div *ngIf="parent.currentTourStep === 3">
+            This is the list with your selected buffs, showing you the summed up attribute changes.
+        </div>
+
+        <div *ngIf="parent.currentTourStep === 4">
+            The above text field contains a generated chat message that you can copy and paste into the ingame chat window.<br>
+            <br>
+            Note that "/tt" stands for "tell target", so make sure you target the entertainer when sending the message.
+        </div>
+
+        <div *ngIf="parent.currentTourStep === 5">
+            With the "Save to URL" button you can append the current configuration to the URL, which you can then store as a bookmark.<br>
+            <br>
+            You could generate and store multiple bookmarks for different characters or activities.
+        </div>
+
+        <div *ngIf="parent.currentTourStep === 6">
+            In this text field you can change the default template for the generated message. Change it to a sentence you like and click on "Apply template". Your changes are saved in your browser until you reset it with "Reset template".<br>
+            <br>
+            You can use different placeholders:<br>
+            &nbsp;&nbsp;%Buffs% for uppercase buff names<br>
+            &nbsp;&nbsp;%buffs% for lowercase buff names
+        </div>
+
+        <div *ngIf="parent.currentTourStep === 7">
+            This concludes the introduction tour. I hope you like this little tool.<br>
+            <br>
+            If you have any comments or questions you can find my contact details at the bottom of the page.
+        </div>
+
+        <div class="tourButtonRow mt-3">
+            <input type="button"
+                   class="btn btn-primary btn-xs tour-button-back"
+                   [class.invisible]="parent.currentTourStep === 1"
+                   (click)="parent.tourStep(parent.currentTourStep - 1)"
+                   value="Back">
+            <input type="button"
+                   class="btn btn-primary btn-xs tour-button-close"
+                   (click)="parent.tourStep(-1)"
+                   value="Close">
+            <input type="button"
+                   class="btn btn-primary btn-xs tour-button-next"
+                   [class.invisible]="parent.currentTourStep >= 7"
+                   (click)="parent.tourStep(parent.currentTourStep + 1)"
+                   value="Next">
+        </div>
+    </div>
+</div>

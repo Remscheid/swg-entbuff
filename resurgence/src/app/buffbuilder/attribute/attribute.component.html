@@ -1,0 +1,20 @@
+<div class="row no-gutters line-height-2">
+    <div class="col-8 stat">
+        <span class="ml-3" title="{{buff.description}}">{{buff.name}} (<span class="d-none d-lg-inline">cost </span>{{buff.cost}})</span>
+    </div>
+    <div class="col-4 more text-right">
+        <span style="display: flex; align-items: center; justify-content: flex-end">
+            <span class="mr-3">{{buff.assignments}}/{{buff.maxAssignments}}</span>
+            <input type="button"
+                   class="btn btn-outline-primary btn-sm mr-1"
+                   [disabled]="buff.assignments === 0"
+                   (click)="parent.removeBuff(buff)"
+                   value="-">
+            <input type="button"
+                   class="btn btn-outline-primary btn-sm"
+                   [disabled]="buff.assignments >= buff.maxAssignments || parent.pointsAssigned + buff.cost > parent.pointsMax"
+                   (click)="parent.addBuff(buff)"
+                   value="+">
+        </span>
+    </div>
+</div>

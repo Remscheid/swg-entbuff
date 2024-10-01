@@ -1,0 +1,126 @@
+<html>
+<head>
+    <title>Statistics</title>
+    <style>
+        .mainContainer {
+            display: flex;
+            justify-content: space-evenly;
+        }
+        .containerServer {
+            width: 30%;
+        }
+    </style>
+</head>
+<body>
+<h1>EBB Statistics</h1>
+
+<div><button onclick="manualUpdate()">Update</button>&nbsp;Last updated: <span id="lastUpdatedContainer"></span></div>
+
+<div class="mainContainer">
+    <div class="containerServer containerLegends">
+        <h2>Legends</h2>
+        <pre id="statisticsByDayLegends"></pre>
+    </div>
+    <div class="containerServer containerR3">
+        <h2>Restoration 3</h2>
+        <pre id="statisticsByDayR3"></pre>
+    </div>
+    <div class="containerServer containerResurgence">
+        <h2>Resurgence</h2>
+        <pre id="statisticsByDayResurgence"></pre>
+    </div>
+</div>
+
+<script>
+    var intervalSeconds = 60;
+    var statisticsByDayLegends = document.getElementById('statisticsByDayLegends');
+    var statisticsByDayR3 = document.getElementById('statisticsByDayR3');
+    var statisticsByDayResurgence = document.getElementById('statisticsByDayResurgence');
+    var lastUpdatedContainer = document.getElementById('lastUpdatedContainer');
+    var statisticsUrl = 'http://entbuff.sipherius.net/statistics/getstatistics.php';
+
+    function httpGetAsync(theUrl, callback)
+    {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
+                callback(xmlHttp.responseText);
+        }
+        xmlHttp.open("GET", theUrl, true); // true for asynchronous
+        xmlHttp.send(null);
+    }
+
+    function update() {
+        httpGetAsync(statisticsUrl, function(response) {
+            var data = JSON.parse(response);
+            var outputLegends = '';
+            var outputR3 = '';
+            var outputResurgence = '';
+            data.forEach(function(entriesDay) {
+                if (entriesDay.length) {
+                    var entriesLegends = entriesDay.filter(function(entry) {
+                       return entry.pathname.startsWith('/legends');
+                    });
+                    outputLegends += entriesDay[0].day + ': ' + entriesLegends.length + '\n';
+                    var entriesR3 = entriesDay.filter(function(entry) {
+                        return entry.pathname.startsWith('/r3');
+                    });
+                    outputR3 += entriesDay[0].day + ': ' + entriesR3.length + '\n';
+                    var entriesResurgence = entriesDay.filter(function(entry) {
+                        return entry.pathname.startsWith('/resurgence');
+                    });
+                    outputResurgence += entriesDay[0].day + ': ' + entriesResurgence.length + '\n';
+                }
+            });
+            statisticsByDayLegends.innerHTML = outputLegends;
+            statisticsByDayR3.innerHTML = outputR3;
+            statisticsByDayResurgence.innerHTML = outputResurgence;
+
+            lastUpdatedContainer.innerHTML = new Date();
+
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            if (h < 10) {
+                h = '0' + h;
+            }
+            if (m < 10) {
+                m = '0' + m;
+            }
+            if (s < 10) {
+                s = '0' + s;
+            }
+            lastUpdatedContainer.innerHTML = dd + '.' + mm + '.' + yyyy + ' ' + h + ':' + m + ':' + s;
+        });
+    }
+
+    update();
+
+    var interval = setInterval(function() {
+        update();
+    }, intervalSeconds * 1000);
+
+    function manualUpdate() {
+        if (interval) {
+            clearInterval(interval);
+            interval = setInterval(function() {
+                update();
+            }, intervalSeconds * 1000);
+        }
+        update();
+    }
+</script>
+
+</body>
+</html>

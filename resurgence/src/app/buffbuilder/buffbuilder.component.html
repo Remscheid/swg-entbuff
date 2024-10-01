@@ -1,0 +1,135 @@
+<div class="swgDialog row mb-4" id="mainDialog">
+    <div class="col-12 swgDialogTitle">
+      SWG Entertainer Buff Builder &#9679;&nbsp;<i>Resurgence Edition</i>&nbsp;<small>by Sipherius</small><span style="float: right; text-decoration: underline; cursor: pointer;" (click)="enableTour()">Show tour</span>
+    </div>
+
+    <div class="col-12 col-md-6">
+
+        <div class="assignments swgDialogArea pb-2" id="assignments">
+
+            <div *ngFor="let buffCategory of buffsList;">
+                <div class="row">
+                    <div class="col-12 category">
+                      <span>{{ buffCategory.name }}</span>
+                    </div>
+                </div>
+                <div *ngFor="let buff of buffCategory.buffs;">
+                    <app-attribute [buff]="buff" [parent]="this"></app-attribute>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-12 col-md-6">
+
+        <div class="swgDialogArea">
+
+            <div class="row points">
+                <div class="col-9">
+                    <div class="topic">Points assigned:</div>
+                </div>
+                <div class="col-3">
+                    <div class="topic text-right">{{pointsAssigned}} / {{pointsMax}}</div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="swgDialogArea" id="selectedBuffs">
+
+            <div class="row selections">
+                <div class="col-12 line-height-default">
+                    <span class="topic">Selected buffs:</span>
+                </div>
+            </div>
+
+            <div *ngIf="pointsAssigned <= 0" class="mt-3">
+                <div class="" style="color: #6b6e67">Please select some buffs from the list.</div>
+            </div>
+
+            <div *ngFor="let buffCategory of buffsList;">
+              <div *ngFor="let buff of buffCategory.buffs;">
+                <app-assignment [buff]="buff" [parent]="this"></app-assignment>
+              </div>
+            </div>
+
+            <div *ngIf="pointsAssigned > 0" class="mt-3" style="overflow: hidden">
+                <input type="button"
+                       id="clearAllButton"
+                       class="btn btn-outline-primary btn-sm"
+                       style="float: right"
+                       (click)="clearAll()"
+                       value="Clear all">
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-12">
+        <div class="swgDialogArea">
+            <div class="topic">Send the following request to your entertainer</div>
+            <div class="form-group mt-2">
+                <input class="form-control" [(ngModel)]="requestText" placeholder="Please select some buffs from the list." readonly>
+                <input type="button"
+                       id="copyToClipboardButton"
+                       class="btn btn-outline-primary btn-sm mt-2"
+                       (click)="copyRequestToClipboard()"
+                       value="Copy to clipboard">
+                <input type="button"
+                       id="saveToUrlButton"
+                       class="btn btn-outline-primary btn-sm mt-2"
+                       (click)="saveRequestToUrl()"
+                       value="Save to URL">
+                <div class="copyToClipboardResponse mt-2"
+                     [class.copyToClipboardResponseVisible]="showCopyToClipboardResponse">
+                    Copied to clipboard:
+                    <div>
+                        {{clipboardText}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="topic">Modify the request template</div>
+            <div class="form-group mt-2">
+                <input class="form-control" [(ngModel)]="requestTemplate">
+                <input type="button"
+                       id="applyTemplateButton"
+                       class="btn btn-outline-primary btn-sm mt-2"
+                       (click)="applyRequestTemplate()"
+                       value="Apply template">
+                <input type="button"
+                       class="btn btn-outline-primary btn-sm mt-2"
+                       (click)="resetRequestTemplate()"
+                       value="Reset template">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="swgDialog row mb-5">
+    <div class="col-12 swgDialogTitle">
+        Credits
+    </div>
+    <div class="col-12 mt-3 mb-3">
+        I wrote this little tool because I always found it difficult to tell an entertainer which buffs I wanted from him without knowing what buffs were available.
+        Unfortunately SWG doesn't make this info available to the player and information on the internet on this topic is very sparse.
+        I eventually ended up leveling an entertainer myself, just to be able to play around with different buff configurations,
+        which I don't think should be the way to go. So I tried to come up with an alternative solution, hoping to make it a little easier
+        for newer players to get into the entertainer buffing aspect of the game.<br>
+        <br>
+        The data is based on the variation of the game, as it is used in <a href="https://swgresurgence.com/" target="_blank">SWG Resurgence</a>, which I am not affiliated with.
+        This is a private fan project.<br>
+        <br>
+        Star Wars Galaxies is a registered trademark of Lucasfilm Entertainment Company Ltd.<br>
+        <br>
+        Copyright © 2022 Sipherius. All rights reserved.<br>
+        <br>
+        Please report bugs and send feedback to entbuff[at]sipherius.net or contact me on Discord at Sipherius#5505.
+    </div>
+</div>
+
+<app-touritem [parent]="this">
+</app-touritem>
